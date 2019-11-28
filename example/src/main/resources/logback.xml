@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!--自定义字段配置-->
+    <conversionRule conversionWord="UUID" converterClass="com.fh.config.MyConverter"/>
+  <!--  <conversionRule conversionWord="PID" converterClass="com.yss.ms.config.PIDConfig"/>-->
+
+    <!--格式化输出-->
+    <property name="pattern" value="[%d{yyyy-MM-dd HH:mm:ss.SSS}]|%-5level|%UUID||%thread|%logger{5}:%L||%msg%n"/>
+
+    <!--路径前缀-->
+    <property name="prefix" value="/opt/ysscloud/logs/rpa-ms-business-task-mgment"/>
+
+    <!--编码设置-->
+    <property name="charset" value="UTF-8"/>
+
+    <!-- 控制台打印日志的相关配置 -->
+    <appender name="STDOUT"
+              class="ch.qos.logback.core.ConsoleAppender">
+        <!-- 日志格式 -->
+
+        <!--        <encoder>
+                    <pattern>%d{yyyy-MM-dd HH:mm:ss} rpa-ms-business-task-mgment %UUID %PID [%thread] %-5level %logger{5} : %msg%n</pattern>
+                </encoder>-->
+        <!-- 格式化输出日志-->
+        <encoder>
+            <pattern>${pattern}</pattern>
+            <charset>${charset}</charset>
+        </encoder>
+        <!--trace < debug < info < warn < error-->
+        <!--阀值过滤器,只输出 info warn error级别的日志-->
+        <!-- 日志级别过滤器 -->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <!-- 过滤的级别 -->
+            <level>INFO</level>
+        </filter>
+    </appender>
+    <!-- 文件保存日志的相关配置  滚动日志拼接-->
+    <appender name="FILE-OUT"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 保存日志文件的路径 -->
+        <file>${prefix}/debug-test.log</file>
+        <!-- 日志格式 -->
+        <!--格式化日志输出-->
+        <!--        <encoder>
+                    <pattern>%d{yyyy-MM-dd HH:mm:ss} rpa-ms-business-task-mgment [%thread] %-5level %logger{5} - %msg%n</pattern>
+                </encoder>-->
+        <encoder>
+            <pattern>${pattern}</pattern>
+            <charset>${charset}</charset>
+        </encoder>
+        <!--trace < debug < info < warn < error-->
+        <!--阀值过滤器,只输出 info warn error级别的日志-->
+        <!-- 日志级别过滤器 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <!-- 过滤的级别 -->
+            <level>DEBUG</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <!-- 循环策略：基于时间创建日志文件 -->
+        <rollingPolicy
+                class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- 日志文件名格式 -->
+            <fileNamePattern>${prefix}/debug-test-%d{yyyyMMdd}_%i.log</fileNamePattern>
+            <!-- 最大保存时间：20天 -->
+            <maxHistory>7</maxHistory>
+            <!--最大的文件大小-->
+            <maxFileSize>100MB</maxFileSize>
+            <!--总的大小上限-->
+            <totalSizeCap>20GB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+    <appender name="FILE-INFO"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${prefix}/info-test.log</file>
+        <encoder>
+            <pattern>${pattern}</pattern>
+            <charset>${charset}</charset>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy
+                class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${prefix}/info-test-%d{yyyyMMdd}_%i.log</fileNamePattern>
+            <maxHistory>7</maxHistory>
+            <maxFileSize>100MB</maxFileSize>
+            <totalSizeCap>20GB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+    <appender name="FILE-WARN"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${prefix}/warn-test.log</file>
+        <encoder>
+            <pattern>${pattern}</pattern>
+            <charset>${charset}</charset>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>WARN</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy
+                class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${prefix}/warn-test-%d{yyyyMMdd}_%i.log</fileNamePattern>
+            <maxHistory>7</maxHistory>
+            <maxFileSize>100MB</maxFileSize>
+            <totalSizeCap>20GB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+    <appender name="FILE-ERROR"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${prefix}/error-test.log</file>
+        <encoder>
+            <pattern>${pattern}</pattern>
+            <charset>${charset}</charset>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy
+                class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${prefix}/error-test-%d{yyyyMMdd}_%i.log</fileNamePattern>
+            <maxHistory>7</maxHistory>
+            <maxFileSize>100MB</maxFileSize>
+            <totalSizeCap>20GB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+    <!-- 基于dubug处理日志：具体控制台或者文件对日志级别的处理还要看所在appender配置的filter，如果没有配置filter，则使用root配置 -->
+    <root level="debug">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="FILE-OUT" />
+        <appender-ref ref="FILE-INFO"/>
+        <appender-ref ref="FILE-WARN"/>
+        <appender-ref ref="FILE-ERROR"/>
+    </root>
+</configuration>
