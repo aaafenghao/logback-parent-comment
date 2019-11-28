@@ -63,6 +63,8 @@ public class StaticLoggerBinder implements LoggerFactoryBinder {
         defaultLoggerContext.setName(CoreConstants.DEFAULT_CONTEXT_NAME);
     }
 
+    //logback包的  //查看到slf4j的兼容行API中也有相同的类
+    //所以说,该类可以说是门面框架和具体时间的衔接口
     public static StaticLoggerBinder getSingleton() {
         return SINGLETON;
     }
@@ -71,7 +73,9 @@ public class StaticLoggerBinder implements LoggerFactoryBinder {
      * Package access for testing purposes.
      */
     static void reset() {
+        //当前静态日志绑定类的创建,内部只有名称的设置
         SINGLETON = new StaticLoggerBinder();
+        //绑定类的初始化
         SINGLETON.init();
     }
 
