@@ -56,6 +56,9 @@ public class TimeBasedRollingPolicy<E> extends RollingPolicyBase implements Trig
 
     private ArchiveRemover archiveRemover;
 
+    //SizeAndTimeBasedRollingPolicy 已经创建,并且设置了最大文件大小
+    //EMBEDDED--嵌入式
+    //SizeAndTimeBasedFNATP
     TimeBasedFileNamingAndTriggeringPolicy<E> timeBasedFileNamingAndTriggeringPolicy;
 
     boolean cleanHistoryOnStart = false;
@@ -67,6 +70,7 @@ public class TimeBasedRollingPolicy<E> extends RollingPolicyBase implements Trig
         // find out period from the filename pattern
         if (fileNamePatternStr != null) {
             fileNamePattern = new FileNamePattern(fileNamePatternStr, this.context);
+            //确定压缩模式--应该不用看
             determineCompressionMode();
         } else {
             addWarn(FNP_NOT_SET);
@@ -92,6 +96,7 @@ public class TimeBasedRollingPolicy<E> extends RollingPolicyBase implements Trig
         }
         timeBasedFileNamingAndTriggeringPolicy.setContext(context);
         timeBasedFileNamingAndTriggeringPolicy.setTimeBasedRollingPolicy(this);
+        //确定该启动方法做了啥
         timeBasedFileNamingAndTriggeringPolicy.start();
 
         if (!timeBasedFileNamingAndTriggeringPolicy.isStarted()) {
@@ -106,15 +111,19 @@ public class TimeBasedRollingPolicy<E> extends RollingPolicyBase implements Trig
             archiveRemover = timeBasedFileNamingAndTriggeringPolicy.getArchiveRemover();
             archiveRemover.setMaxHistory(maxHistory);
             archiveRemover.setTotalSizeCap(totalSizeCap.getSize());
+            //清理历史记录,在启动的时候,这个是根据变量名称知道的,不知道对不对
             if (cleanHistoryOnStart) {
                 addInfo("Cleaning on start up");
                 Date now = new Date(timeBasedFileNamingAndTriggeringPolicy.getCurrentTime());
+                //异步清洁--清理历史数据,可能是在这个地方
                 cleanUpFuture = archiveRemover.cleanAsynchronously(now);
             }
         } else if (!isUnboundedTotalSizeCap()) {
             addWarn("'maxHistory' is not set, ignoring 'totalSizeCap' option with value ["+totalSizeCap+"]");
         }
 
+        //确定该启动方法干了啥
+        //做了一个状态修改 started=true
         super.start();
     }
 

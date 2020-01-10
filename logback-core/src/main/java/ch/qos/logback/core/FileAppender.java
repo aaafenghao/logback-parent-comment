@@ -85,6 +85,7 @@ public class FileAppender<E> extends OutputStreamAppender<E> {
      * 
      * @return the value of the file property
      */
+    //获取原始文件的属性
     final public String rawFileProperty() {
         return fileName;
     }

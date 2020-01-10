@@ -107,6 +107,10 @@ public class FileNamePattern extends ContextAwareBase {
     }
 
 
+    /**
+     * 获取主日期转换器
+     * @return
+     */
     public DateTokenConverter<Object> getPrimaryDateTokenConverter() {
         Converter<Object> p = headTokenConverter;
 

@@ -53,13 +53,17 @@ public class TimeBasedArchiveRemover extends ContextAwareBase implements Archive
  
         long nowInMillis = now.getTime();
         // for a live appender periodsElapsed is expected to be 1
+        //计算自上次清洁以来经过的时间
         int periodsElapsed = computeElapsedPeriodsSinceLastClean(nowInMillis);
         lastHeartBeat = nowInMillis;
         if (periodsElapsed > 1) {
             addInfo("Multiple periods, i.e. " + periodsElapsed + " periods, seem to have elapsed. This is expected at application start.");
         }
+        //删除7天前的数据,有下限也有上限
         for (int i = 0; i < periodsElapsed; i++) {
+            //maxHistory    -8-i
             int offset = getPeriodOffsetForDeletionTarget() - i;
+            //将时间向前推
             Date dateOfPeriodToClean = rc.getEndOfNextNthPeriod(now, offset);
             cleanPeriod(dateOfPeriodToClean);
         }
@@ -237,6 +241,10 @@ public class TimeBasedArchiveRemover extends ContextAwareBase implements Archive
             this.now = now;
         }
 
+        /**
+         * 根据最大历史配置,清除不需要保留的日志
+         * 计算历史配置的文件大小是否超过最大配置,如果超过了,进行文件删除操作
+         */
         @Override
         public void run() {
             clean(now);

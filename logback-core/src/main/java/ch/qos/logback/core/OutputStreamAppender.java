@@ -98,7 +98,7 @@ public class OutputStreamAppender<E> extends UnsynchronizedAppenderBase<E> {
         if (!isStarted()) {
             return;
         }
-
+        //日志拼接--除了打印到控制台的,其他的都是走文件相关的滚动策略
         subAppend(eventObject);
     }
 

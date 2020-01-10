@@ -31,6 +31,7 @@ import ch.qos.logback.core.util.InvocationGate;
 @NoAutoStart
 public class SizeAndTimeBasedFNATP<E> extends TimeBasedFileNamingAndTriggeringPolicyBase<E> {
 
+    //用法--切入式,直接
     enum Usage {EMBEDDED, DIRECT};
 
     
@@ -55,6 +56,7 @@ public class SizeAndTimeBasedFNATP<E> extends TimeBasedFileNamingAndTriggeringPo
     @Override
     public void start() {
         // we depend on certain fields having been initialized in super class
+        //父类做的事还挺多的
         super.start();
         
         if(usage == Usage.DIRECT) {
@@ -139,6 +141,7 @@ public class SizeAndTimeBasedFNATP<E> extends TimeBasedFileNamingAndTriggeringPo
         long time = getCurrentTime();
 
         // first check for roll-over based on time
+        // nextCheck--时间的计算方式
         if (time >= nextCheck) {
             Date dateInElapsedPeriod = dateInCurrentPeriod;
             elapsedPeriodsFileName = tbrp.fileNamePatternWithoutCompSuffix.convertMultipleArguments(dateInElapsedPeriod, currentPeriodsCounter);

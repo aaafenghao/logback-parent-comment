@@ -8,7 +8,7 @@
     <property name="pattern" value="[%d{yyyy-MM-dd HH:mm:ss.SSS}]|%-5level|%UUID||%thread|%logger{5}:%L||%msg%n"/>
 
     <!--路径前缀-->
-    <property name="prefix" value="/opt/ysscloud/logs/rpa-ms-business-task-mgment"/>
+    <property name="prefix" value="/opt/ysscloud/logs/logback-example"/>
 
     <!--编码设置-->
     <property name="charset" value="UTF-8"/>
@@ -38,7 +38,7 @@
     <appender name="FILE-OUT"
               class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!-- 保存日志文件的路径 -->
-        <file>${prefix}/debug-test.log</file>
+<!--        <file>${prefix}/debug-test.log</file>-->
         <!-- 日志格式 -->
         <!--格式化日志输出-->
         <!--        <encoder>
@@ -61,7 +61,7 @@
         <rollingPolicy
                 class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
             <!-- 日志文件名格式 -->
-            <fileNamePattern>${prefix}/debug-test-%d{yyyyMMdd}_%i.log</fileNamePattern>
+            <fileNamePattern>${prefix}/%d{yyyyMMdd}/debug-test_%i.log</fileNamePattern>
             <!-- 最大保存时间：20天 -->
             <maxHistory>7</maxHistory>
             <!--最大的文件大小-->
@@ -72,7 +72,7 @@
     </appender>
     <appender name="FILE-INFO"
               class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${prefix}/info-test.log</file>
+<!--        <file>${prefix}/info-test.log</file>-->
         <encoder>
             <pattern>${pattern}</pattern>
             <charset>${charset}</charset>
@@ -84,7 +84,7 @@
         </filter>
         <rollingPolicy
                 class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>${prefix}/info-test-%d{yyyyMMdd}_%i.log</fileNamePattern>
+            <fileNamePattern>${prefix}/%d{yyyyMMdd}/info-test_%i.log</fileNamePattern>
             <maxHistory>7</maxHistory>
             <maxFileSize>100MB</maxFileSize>
             <totalSizeCap>20GB</totalSizeCap>
@@ -92,7 +92,7 @@
     </appender>
     <appender name="FILE-WARN"
               class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${prefix}/warn-test.log</file>
+<!--        <file>${prefix}/warn-test.log</file>-->
         <encoder>
             <pattern>${pattern}</pattern>
             <charset>${charset}</charset>
@@ -104,7 +104,7 @@
         </filter>
         <rollingPolicy
                 class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>${prefix}/warn-test-%d{yyyyMMdd}_%i.log</fileNamePattern>
+            <fileNamePattern>${prefix}/%d{yyyyMMdd}/warn-test_%i.log</fileNamePattern>
             <maxHistory>7</maxHistory>
             <maxFileSize>100MB</maxFileSize>
             <totalSizeCap>20GB</totalSizeCap>
@@ -112,7 +112,7 @@
     </appender>
     <appender name="FILE-ERROR"
               class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${prefix}/error-test.log</file>
+<!--        <file>${prefix}/error-test.log</file>-->
         <encoder>
             <pattern>${pattern}</pattern>
             <charset>${charset}</charset>
@@ -124,7 +124,7 @@
         </filter>
         <rollingPolicy
                 class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>${prefix}/error-test-%d{yyyyMMdd}_%i.log</fileNamePattern>
+            <fileNamePattern>${prefix}/%d{yyyyMMdd}/error-test_%i.log</fileNamePattern>
             <maxHistory>7</maxHistory>
             <maxFileSize>100MB</maxFileSize>
             <totalSizeCap>20GB</totalSizeCap>

@@ -51,13 +51,14 @@ abstract public class TimeBasedFileNamingAndTriggeringPolicyBase<E> extends Cont
         if (dtc == null) {
             throw new IllegalStateException("FileNamePattern [" + tbrp.fileNamePattern.getPattern() + "] does not contain a valid DateToken");
         }
-
+        //时区的设置 -- 构建滚动日历
         if (dtc.getTimeZone() != null) {
             rc = new RollingCalendar(dtc.getDatePattern(), dtc.getTimeZone(), Locale.getDefault());
         } else {
             rc = new RollingCalendar(dtc.getDatePattern());
         }
         addInfo("The date pattern is '" + dtc.getDatePattern() + "' from file name pattern '" + tbrp.fileNamePattern.getPattern() + "'.");
+        //打印周期
         rc.printPeriodicity(this);
 
         if (!rc.isCollisionFree()) {
@@ -66,7 +67,7 @@ abstract public class TimeBasedFileNamingAndTriggeringPolicyBase<E> extends Cont
             withErrors();
             return;
         }
-
+        //设置当前周期的时间
         setDateInCurrentPeriod(new Date(getCurrentTime()));
         if (tbrp.getParentsRawFileProperty() != null) {
             File currentFile = new File(tbrp.getParentsRawFileProperty());
@@ -75,6 +76,7 @@ abstract public class TimeBasedFileNamingAndTriggeringPolicyBase<E> extends Cont
             }
         }
         addInfo("Setting initial period to " + dateInCurrentPeriod);
+        //计算下一次检查的时间
         computeNextCheck();
     }
 

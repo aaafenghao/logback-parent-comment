@@ -64,7 +64,7 @@ public class StaticLoggerBinder implements LoggerFactoryBinder {
     }
 
     //logback包的  //查看到slf4j的兼容行API中也有相同的类
-    //所以说,该类可以说是门面框架和具体时间的衔接口
+    //所以说,该类可以说是门面框架和具体实现的衔接口
     public static StaticLoggerBinder getSingleton() {
         return SINGLETON;
     }

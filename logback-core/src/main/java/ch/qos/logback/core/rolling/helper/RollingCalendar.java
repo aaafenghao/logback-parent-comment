@@ -49,6 +49,7 @@ public class RollingCalendar extends GregorianCalendar {
     public RollingCalendar(String datePattern) {
         super();
         this.datePattern = datePattern;
+        //PeriodicityType.TOP_OF_DAY
         this.periodicityType = computePeriodicityType();
     }
 
@@ -287,6 +288,7 @@ public class RollingCalendar extends GregorianCalendar {
     }
 
     public Date getNextTriggeringDate(Date now) {
+        //当前时间+1天后,将日期修改成了相加后的0时0分0秒
         return getEndOfNextNthPeriod(now, 1);
     }
 
