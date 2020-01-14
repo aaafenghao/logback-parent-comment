@@ -107,7 +107,9 @@ public class TimeBasedRollingPolicy<E> extends RollingPolicyBase implements Trig
         // the maxHistory property is given to TimeBasedRollingPolicy instead of to
         // the TimeBasedFileNamingAndTriggeringPolicy. This makes it more convenient
         // for the user at the cost of inconsistency here.
+        //maxHistory配置成0,就不会有清除日志和最大磁盘的判断
         if (maxHistory != UNBOUND_HISTORY) {
+            //添加类变量,添加后,rollover方法对变量的判断
             archiveRemover = timeBasedFileNamingAndTriggeringPolicy.getArchiveRemover();
             archiveRemover.setMaxHistory(maxHistory);
             archiveRemover.setTotalSizeCap(totalSizeCap.getSize());
@@ -187,6 +189,7 @@ public class TimeBasedRollingPolicy<E> extends RollingPolicyBase implements Trig
         }
 
         if (archiveRemover != null) {
+            //进行历史日志清理,磁盘大小的判断
             Date now = new Date(timeBasedFileNamingAndTriggeringPolicy.getCurrentTime());
             this.cleanUpFuture = archiveRemover.cleanAsynchronously(now);
         }
